@@ -6,9 +6,9 @@
     <div class="row mb-3">
         <div class="col">
            <label class="form-label">Continente: </label> 
-           <select class="form-control">
+           <select formControlName="region" class="form-control">
             <option value="">-- Selector de continentes --</option>
-            <option value=""></option>
+            <option value="">Africa</option>
            </select>
         </div>
     </div>
@@ -19,3 +19,6 @@
 <code>
     {{myForm.value | json}}
 </code>
+<p>
+    i form valid: {{ myForm.valid }}
+</p>
