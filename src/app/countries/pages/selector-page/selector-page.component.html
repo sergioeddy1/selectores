@@ -8,7 +8,9 @@
            <label class="form-label">Continente: </label> 
            <select formControlName="region" class="form-control">
             <option value="">-- Selector de continentes --</option>
-            <option value="">Africa</option>
+            <!-- Recordatorio que con el ngFor se manda a llamar los datos que se estan mandado desde el arreglo que se declara y se renombra desde la calse TS -->
+            <!-- Tambien dentro del selector en el campo del texto tenemos que poner el sufijo con el que se esta mandando el valor -->
+            <option *ngFor="let region of regions" [value]="region">{{region}}</option>
            </select>
         </div>
     </div>
