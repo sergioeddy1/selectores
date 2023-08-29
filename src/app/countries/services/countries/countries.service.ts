@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Region } from '../../interfaces/countries.interfacs';
+import { Region, SmallCountry } from '../../interfaces/countries.interfacs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,4 +14,8 @@ get regions(): Region[] {
   return[...this._regions];   //Se delcara un metodo para conseguir las regiones
 }
 
+  getCountriesByRegion( region: Region ): SmallCountry[] { //Servicio para que funcione el selector de paises por cambio de región.
+
+  return[];
+  }
 }
