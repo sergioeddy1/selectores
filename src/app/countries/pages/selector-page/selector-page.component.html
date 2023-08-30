@@ -21,6 +21,8 @@
                <label class="form-label">Pais: </label> 
                <select formControlName="country" class="form-control">
                 <option value="">-- Selector de Paises --</option>
+                <!-- Con este ngfor se manda a llamar el arreglo de la referencia que se tiene en la interface y el nombre de los paises que se desclaran desde el TS -->
+                <option *ngFor="let country of countriesByRegion" [value]="country.cca3">{{country.name}}</option>
                </select>
             </div>
         </div>

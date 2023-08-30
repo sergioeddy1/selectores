@@ -1,7 +1,8 @@
-import { Region } from './../../interfaces/countries.interfacs';
+import { Region, SmallCountry } from './../../interfaces/countries.interfacs';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { CountriesService } from '../../services/countries/countries.service';
+import { switchMap } from 'rxjs';
 
 @Component({
   templateUrl: './selector-page.component.html',
@@ -9,6 +10,8 @@ import { CountriesService } from '../../services/countries/countries.service';
   ]
 })
 export class SelectorPageComponent implements OnInit{
+
+public countriesByRegion: SmallCountry[] = [];  // Almacenamos los countries que se estan mandando a llamar desde el servicio.
 
 public myForm: FormGroup = this.fb.group({
   region: ['', Validators.required],
@@ -31,8 +34,11 @@ public myForm: FormGroup = this.fb.group({
 
   onRegionChange(): void {
     this.myForm.get('region')!.valueChanges 
-    .subscribe ( region => {                //Este OnInit hace referencia a el cambio de selector dependiendo de la condicion que se mencione en el selector de regiones.
-     console.log({region})
+    .pipe(
+      switchMap(region => this.countriesServices.getCountriesByRegion(region))                      //Con este se disparar la region para que pueda efecutarse el cambio de region por pais
+    )
+    .subscribe ( countries => {                //Este OnInit hace referencia a el cambio de selector dependiendo de la condicion que se mencione en el selector de regiones.
+      this.countriesByRegion = countries;  // Desde aqui se mutesran los countries que fueron almacenados desde el servicio y se mandan a llamar desde la API
     });
   }
 
