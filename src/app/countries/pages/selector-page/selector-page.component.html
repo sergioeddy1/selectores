@@ -16,7 +16,8 @@
     </div>
 
         <!-- Countries -->
-        <div class="row mb-3">
+        <!-- Se genera la condicion para que en el caso de que no se haya seleccionado alguna region, el selector de paises permanezca oculto, a menos que el valor sea mayor que 0 al ser seleccionado en el arreglo, el selectro de paises aparecera.  -->
+        <div class="row mb-3" *ngIf="countriesByRegion.length > 0">
             <div class="col">
                <label class="form-label">Pais: </label> 
                <select formControlName="country" class="form-control">
@@ -26,6 +27,19 @@
                </select>
             </div>
         </div>
+
+        <!-- Borders -->
+        <div class="row mb-3" *ngIf="borders.length > 0">
+            <div class="col">
+               <label class="form-label">Fronteras: </label> 
+               <select formControlName="border" class="form-control">
+                <option value="">-- Selector de Fronteras --</option>
+                <!-- Con este ngfor se manda a llamar el arreglo de la referencia que se tiene en la interface y el nombre de los paises que se desclaran desde el TS -->
+                <option *ngFor="let border of borders" [value]="border">{{border}}</option>
+               </select>
+            </div>
+        </div>
+
 
 </form>
 
