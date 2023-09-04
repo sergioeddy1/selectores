@@ -35,7 +35,8 @@
                <select formControlName="border" class="form-control">
                 <option value="">-- Selector de Fronteras --</option>
                 <!-- Con este ngfor se manda a llamar el arreglo de la referencia que se tiene en la interface y el nombre de los paises que se desclaran desde el TS -->
-                <option *ngFor="let border of borders" [value]="border">{{border}}</option>
+                <!-- <option *ngFor="let border of borders" [value]="border">{{border}}</option> -->
+                <option *ngFor="let country of borders" [value]="country.cca3">{{ country.name }}</option>
                </select>
             </div>
         </div>

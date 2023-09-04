@@ -1,11 +1,11 @@
 import { Country } from './../../interfaces/countries.interfacs';
 import { Injectable } from '@angular/core';
 import { Region, SmallCountry } from '../../interfaces/countries.interfacs';
-import { Observable, of, tap, map } from 'rxjs';
+import { Observable, of, tap, map, combineLatest } from 'rxjs';
 import { HttpClient } from '@angular/common/http'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root'  //El servicio se provee en la ruta. 
 })
 export class CountriesService {
 
@@ -48,6 +48,21 @@ get regions(): Region[] {
     }))
     )
   } 
+
+  getCountryBordersByCodes(borders: string[]): Observable<SmallCountry[]> {  //Se regresaran objetos que lucen como SmallCountrys. 
+  
+    if( !borders || borders.length === 0  ) return of([]); //Si los borders llegan vacios o la longitud de estos es estrictamente igual a 0 se hara un retorno de un arreglo vacio. 
+    
+    const countriesRequest: Observable<SmallCountry>[] = [];
+    
+    borders.forEach( code => {
+      const request = this.getCountryByAlphaCode( code ); //si vienen 5 paises dentro del arreglo se crea el listadoo de observable con cada 1 de los 5 paises. 
+      countriesRequest.push( request );
+    });
+    return combineLatest( countriesRequest );
+  }
+
+
 }
 
 

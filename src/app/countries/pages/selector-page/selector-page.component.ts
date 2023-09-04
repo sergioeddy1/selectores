@@ -12,7 +12,7 @@ import { switchMap, tap, filter } from 'rxjs';
 export class SelectorPageComponent implements OnInit{
 
 public countriesByRegion: SmallCountry[] = [];  // Almacenamos los countries que se estan mandando a llamar desde el servicio.
-public borders: string[] = [];
+public borders: SmallCountry[] = [];
 
 public myForm: FormGroup = this.fb.group({
   region: ['', Validators.required],
@@ -50,12 +50,12 @@ public myForm: FormGroup = this.fb.group({
     this.myForm.get('country')!.valueChanges 
     .pipe(
       tap( () => this.myForm.get('border')!.setValue('')), 
-      filter( (value: string ) => value.length >0 ) ,
-      switchMap( (alphaCode) => this.countriesServices.getCountryByAlphaCode(alphaCode) ),                      
+      filter( (value: string ) => value.length > 0 ) ,
+      switchMap( (alphaCode) => this.countriesServices.getCountryByAlphaCode(alphaCode) ),  //switchmap sirve para cambiar lo que se esta mandando por la funcion del fitlro
+      switchMap( (country) => this.countriesServices.getCountryBordersByCodes(country.borders)),                    
     )
-    .subscribe ( country => {                
-     console.log({borders: country.borders}) 
-     this.borders = country.borders;
+    .subscribe ( countries => {                
+     this.borders = countries;
     });
   }
 
